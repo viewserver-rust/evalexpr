@@ -292,6 +292,10 @@ fn test_builtin_functions() {
         Ok(Value::Int(6))
     );
     assert_eq!(
+        eval("len((1, 2, 5))"),
+        Ok(Value::Int(3))
+    );
+    assert_eq!(
         eval("str::to_lowercase(\"FOOBAR\")"),
         Ok(Value::from("foobar"))
     );

@@ -61,8 +61,11 @@ pub fn builtin_function(identifier: &str) -> Option<Function> {
         "len" => Some(Function::new(
             Some(1),
             Box::new(|arguments| {
-                let subject = expect_string(&arguments[0])?;
-                Ok(Value::from(subject.len() as i64))
+                match &arguments[0] {
+                    Value::String(string) => Ok(Value::from(string.len() as IntType)),
+                    Value::Tuple(tuple) => Ok(Value::from(tuple.len() as IntType)),
+                    value => Err(EvalexprError::type_error(value.clone(), vec![Value::String(Default::default()), Value::Tuple(Default::default())])),
+                }
             }),
         )),
 
